@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#141a33">
 <title>Containment Breach</title>
 <style>
   html, body { margin: 0; height: 100%; background: #141a33; overflow: hidden; }
@@ -1139,6 +1143,18 @@ if (dpad) {
 // a touch only counts as a user gesture for audio when it ends
 addEventListener('pointerup', unlockAudio);
 addEventListener('touchend', unlockAudio);
+
+// ask for fullscreen on the first tap, so mobile Chrome drops its URL bar.
+// must run inside a user-gesture handler, so it's wired to the same touchend as the audio unlock.
+let fsRequested = false;
+function requestFs() {
+  if (fsRequested || !isTouch) return;
+  fsRequested = true;
+  const el = document.documentElement;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen;
+  if (req) req.call(el).catch(() => {});
+}
+addEventListener('touchend', requestFs, { once: true });
 
 // block double-tap-to-zoom: some mobile browsers trigger it even with
 // user-scalable=no and touch-action:none on individual elements
