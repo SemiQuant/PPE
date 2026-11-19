@@ -6030,6 +6030,7 @@ function drawResults() {
   if (R.newBest && Math.floor(time * 4) % 2) text('NEW BEST', W / 2, 162, 7, '#ffe066', 'center', INK);
   text(R.rank, W / 2, 198, 9, '#ffe066', 'center', INK);
   text(R.info, W / 2, 210, 6.5, '#c9d4f5', 'center', INK);
+  if (R.kind === 'final') for (const y of [18, 252]) textFit('TAKE A SCREENSHOT OF THIS AND SHOW IT TO ME AT THE BAR FOR A FREE PINT', W / 2, y, 9, W - 32, '#ffe066', 'center', INK);
   const go = R.kind === 'final' ? (isTouch ? 'TAP TO FILE IT' : 'PRESS ANY KEY TO FILE IT') : (isTouch ? 'TAP TO CONTINUE' : 'PRESS ANY KEY TO CONTINUE');
   if (stateT > 1.5 && Math.floor(time * 2) % 2 === 0) text(go, W / 2, 224, 8, '#ffffff', 'center', INK);
 }
